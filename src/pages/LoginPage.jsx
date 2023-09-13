@@ -1,8 +1,11 @@
 import React from 'react'
+import AccountLogin from '../components/account/AccountLogin'
 
 const LoginPage = () => {
   return (
-    <div>LoginPage</div>
+    <div>
+      <AccountLogin />
+    </div>
   )
 }
 

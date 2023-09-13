@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { updateToken, logout, isUserLogin } from '../../helpers/functions';
 
 const Navbar = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    updateToken();
+  }, []);
+
   return (
     <div>
       <button onClick={() => navigate('/')}>Home</button>
-      <button onClick={() => navigate('/register')}>Register</button>
-      <button onClick={() => navigate('/login')}>Login</button>
-      <button onClick={() => navigate('/')}>Logout</button>
+      {isUserLogin() ? (
+        <button onClick={() => {
+          logout();
+          navigate('/');
+        }}>Logout</button>
+      ) : (
+        <>
+          <button onClick={() => navigate('/register')}>Register</button>
+          <button onClick={() => navigate('/login')}>Login</button>
+        </>
+      )}
     </div>
   )
 }
