@@ -13,10 +13,13 @@ const Navbar = () => {
     <div>
       <button onClick={() => navigate('/')}>Home</button>
       {isUserLogin() ? (
-        <button onClick={() => {
-          logout();
-          navigate('/');
-        }}>Logout</button>
+        <>
+          <button onClick={() => navigate('/product-create')}>Create Product</button>
+          <button onClick={() => {
+            logout();
+            navigate('/');
+          }}>Logout</button>
+        </>
       ) : (
         <>
           <button onClick={() => navigate('/register')}>Register</button>
