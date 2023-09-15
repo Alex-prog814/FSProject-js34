@@ -44,3 +44,21 @@ export const getCategories = createAsyncThunk(
         return data;
     }
 );
+
+export const updateProduct = createAsyncThunk(
+    'products/updateProduct',
+    async ({ product, navigate }, { dispatch }) => {
+        const config = getAuthConfig();
+        const updatedProduct = new FormData();
+        updatedProduct.append('title', product.title);
+        updatedProduct.append('description', product.description);
+        updatedProduct.append('category', product.category);
+        updatedProduct.append('price', product.price);
+        if(typeof(product.image) === 'object') {
+            updatedProduct.append('image', product.image);
+        };
+        const { data } = await axios.patch(`${API}/products/${product.id}/`, updatedProduct, config);
+        dispatch(getProducts());
+        return { data, navigate };
+    }
+);

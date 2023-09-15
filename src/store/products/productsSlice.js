@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProducts, getOneProduct, createProduct, getCategories } from "./productsActions";
+import { getProducts, getOneProduct, createProduct, getCategories, updateProduct } from "./productsActions";
 
 const productsSlice = createSlice({
     name: 'products',
@@ -47,6 +47,9 @@ const productsSlice = createSlice({
         })
         .addCase(getCategories.fulfilled, (state, action) => {
             state.categories = action.payload.results;
+        })
+        .addCase(updateProduct.fulfilled, (_, action) => {
+            action.payload.navigate('/');
         })
     }
 });

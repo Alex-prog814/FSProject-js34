@@ -12,6 +12,12 @@ const ProductItem = ({ product }) => {
         <span>${ product.price } </span>
         <span>{ product.likes } </span>
         <button onClick={() => navigate(`/products/${product.id}`)}>Details</button>
+        {product.is_author && (
+          <>
+            <button onClick={() => navigate(`/product-update/${product.id}`)}>Edit</button>
+            <button>Delete</button>
+          </>
+        )}
     </div>
   )
 }
