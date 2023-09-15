@@ -16,7 +16,8 @@ export const getProducts = createAsyncThunk(
 export const getOneProduct = createAsyncThunk(
     'products/getOneProduct',
     async ({ id }) => {
-        const { data } = await axios.get(`${API}/products/${id}`);
+        const config = getAuthConfig();
+        const { data } = await axios.get(`${API}/products/${id}`, config ? config : null);
         return data;
     }
 );
@@ -60,5 +61,57 @@ export const updateProduct = createAsyncThunk(
         const { data } = await axios.patch(`${API}/products/${product.id}/`, updatedProduct, config);
         dispatch(getProducts());
         return { data, navigate };
+    }
+);
+
+export const deleteProduct = createAsyncThunk(
+    'products/deleteProduct',
+    async ({ id }, { dispatch }) => {
+        const config = getAuthConfig();
+        const { data } = await axios.delete(`${API}/products/${id}/`, config);
+        dispatch(getProducts());
+        return { data };
+    }
+);
+
+export const createReview = createAsyncThunk(
+    'products/createReview',
+    async ({ text, productId }) => {
+        const config = getAuthConfig();
+        const newReview = new FormData();
+        newReview.append('text', text);
+        newReview.append('product', productId);
+        const { data } = await axios.post(`${API}/reviews/`, newReview, config);
+        return { data };
+    }
+);
+
+export const deleteReview = createAsyncThunk(
+    'products/deleteReview',
+    async ({ reviewId, productId }, { dispatch }) => {
+        const config = getAuthConfig();
+        const { data } = await axios.delete(`${API}/reviews/${reviewId}/`, config);
+        dispatch(getOneProduct({ id: productId }));
+        return { data };
+    }
+);
+
+export const getFavorites = createAsyncThunk(
+    'products/getFavorites',
+    async () => {
+        const config = getAuthConfig();
+        const { data } = await axios.get(`${API}/favorites/`, config);
+        return { data };
+    }
+);
+
+export const toggleFavorite = createAsyncThunk(
+    'products/toggleFavorite',
+    async ({ productId }, { dispatch }) => {
+        const config = getAuthConfig();
+        const { data } = await axios.get(`${API}/products/${productId}/toggle_favorites/`, config);
+        dispatch(getOneProduct({ id: productId }));
+        dispatch(getFavorites());
+        return { data };
     }
 );

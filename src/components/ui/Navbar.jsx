@@ -15,6 +15,7 @@ const Navbar = () => {
       {isUserLogin() ? (
         <>
           <button onClick={() => navigate('/product-create')}>Create Product</button>
+          <button onClick={() => navigate('/favorites')}>Favorites</button>
           <button onClick={() => {
             logout();
             navigate('/');

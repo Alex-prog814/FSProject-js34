@@ -1,5 +1,6 @@
+import { SdStorageTwoTone } from "@mui/icons-material";
 import { createSlice } from "@reduxjs/toolkit";
-import { getProducts, getOneProduct, createProduct, getCategories, updateProduct } from "./productsActions";
+import { getProducts, getOneProduct, createProduct, getCategories, updateProduct, getFavorites } from "./productsActions";
 
 const productsSlice = createSlice({
     name: 'products',
@@ -9,7 +10,8 @@ const productsSlice = createSlice({
         oneProduct: null,
         currentPage: 1,
         totalPages: 1,
-        categories: []
+        categories: [],
+        favorites: []
     },
     reducers: {
         clearOneProductState: (state) => {
@@ -50,6 +52,16 @@ const productsSlice = createSlice({
         })
         .addCase(updateProduct.fulfilled, (_, action) => {
             action.payload.navigate('/');
+        })
+        .addCase(getFavorites.pending, (state) => {
+            state.loading = true;
+        })
+        .addCase(getFavorites.fulfilled, (state, action) => {
+            state.loading = false;
+            state.favorites = action.payload.data.results;
+        })
+        .addCase(getFavorites.rejected, (state) => {
+            state.loading = false;
         })
     }
 });

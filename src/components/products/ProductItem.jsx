@@ -1,9 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../store/products/productsActions';
 
 const ProductItem = ({ product }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
   return (
     <div>
@@ -15,7 +17,7 @@ const ProductItem = ({ product }) => {
         {product.is_author && (
           <>
             <button onClick={() => navigate(`/product-update/${product.id}`)}>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => dispatch(deleteProduct({ id: product.id }))}>Delete</button>
           </>
         )}
     </div>

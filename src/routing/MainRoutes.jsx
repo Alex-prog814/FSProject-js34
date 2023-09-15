@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import FavoritesPage from '../pages/FavoritesPage';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import ProductCreatePage from '../pages/ProductCreatePage';
@@ -16,6 +17,7 @@ const MainRoutes = () => {
         <Route path="/products/:id" element={<ProductDetailsPage />} />
         <Route path="/product-create" element={<ProductCreatePage />} />
         <Route path="/product-update/:id" element={<ProductUpdatePage />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
     </Routes>
   )
 }
